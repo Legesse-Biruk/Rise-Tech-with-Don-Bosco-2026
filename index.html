@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise TECH | Don Bosco Catholic School Batu</title>
+    <!-- Google Fonts for Clean Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D32F2F;      /* Don Bosco Red */
+            --primary-hover: #B71C1C;
+            --secondary: #1E1E1E;    /* Dark Charcoal for text */
+            --bg-light: #F8F9FA;     /* Soft off-white */
+            --white: #FFFFFF;
+            --border: #E0E0E0;
+            --success: #388E3C;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--secondary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Logo Containers */
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-placeholder {
+            height: 42px;
+            width: auto;
+            min-width: 110px;
+            background-color: #eee;
+            border: 1px dashed #bbb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 600;
+            padding: 0 0.75rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--white) 0%, var(--bg-light) 100%);
+            padding: 4rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            background-color: rgba(211, 47, 47, 0.08);
+            color: var(--primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            word-break: break-word;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        h1 em {
+            color: var(--primary);
+            font-style: normal;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 0.75rem auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr));
+            gap: 2rem;
+        }
+
+        /* Course Cards */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .card-partner {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 0.75rem;
+        }
+
+        .course-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-block {
+            margin-bottom: 1.25rem;
+        }
+
+        .detail-block h4 {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-block ul {
+            list-style-type: none;
+        }
+
+        .detail-block ul li {
+            font-size: 0.95rem;
+            color: #555;
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .detail-block ul li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: auto;
+            gap: 0.5rem;
+        }
+
+        /* Order Guide Box */
+        .order-guide {
+            background-color: rgba(211, 47, 47, 0.04);
+            border: 1px dashed var(--primary);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Payment Steps Section */
+        .payment-box {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step {
+            position: relative;
+        }
+
+        .step-number {
+            background-color: var(--primary);
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Accounts Table */
+        .accounts-display {
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .account-row {
+            padding: 0.6rem 0;
+            font-size: 0.9rem;
+        }
+
+        .account-row:not(:last-child) {
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .account-label {
+            display: block;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.15rem;
+        }
+
+        .account-number {
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+            word-break: break-all;
+        }
+
+        .account-name {
+            font-size: 0.85rem;
+            color: #666;
+            display: block;
+        }
+
+        /* Proof Form */
+        .form-section {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], input[type="tel"], input[type="file"], select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--bg-light);
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="tel"]:focus, select:focus {
+            border-color: var(--primary);
+            background-color: var(--white);
+        }
+
+        input[type="file"] {
+            background-color: var(--white);
+            cursor: pointer;
+            padding: 0.6rem 0.8rem;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            background-color: rgba(56, 142, 60, 0.1);
+            color: var(--success);
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 1.5rem;
+            border: 1px solid var(--success);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Tablet Responsive Shifts */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo-group {
+                justify-content: center;
+            }
+            header .cta-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo-group">
+                <div class="logo-placeholder">Rise TECH Logo</div>
+                <div class="logo-placeholder">Don Bosco Logo</div>
+            </div>
+            <a href="#payment" class="cta-btn" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Register Now</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">In Association with Don Bosco Catholic School Batu</div>
+            <h1>Unlock Elite Tech Skills with <em>Guided Mentorship</em></h1>
+            <p>We bridge the gap. Master world-class foundational courses from Google and IBM. We guide you step-by-step through the curriculum to guarantee your official completion certificates.</p>
+            <a href="#courses" class="cta-btn">Explore Our Courses</a>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <!-- Courses Offered Section -->
+        <section id="courses">
+            <h2>Our Beginner-Level Programs</h2>
+            
+            <div class="order-guide">
+                💡 <strong>Recommended Path:</strong> We recommend taking the <strong>Google IT Support</strong> track first. It builds the core computer system knowledge that makes the <strong>IBM AI</strong> track much easier to understand afterward!
+            </div>
+
+            <div class="grid">
+                
+                <!-- Course 1: Google IT Support -->
+                <div class="card">
+                    <div>
+                        <div class="card-partner">Google Career Academy</div>
+                        <h3>Foundations of Tech Support & IT</h3>
+                        
+                        <div class="course-details">
+                            <div class="detail-block">
+                                <h4>Prerequisites (What you need)</h4>
+                                <ul>
+                                    <li>No prior IT experience required</li>
+                                    <li>Basic computer skills (using a computer, internet, managing files)</li>
+                                    <li>Ability to read and understand English</li>
+                                    <li>A computer, tablet, or smartphone with internet access</li>
+                                    <li>Willingness to learn technical concepts</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="detail-block">
+                                <h4>What you will learn</h4>
+                                <ul>
+                                    <li>Computer hardware fundamentals</li>
+                                    <li>Operating systems (Windows & Linux basics)</li>
+                                    <li>Computer networking configurations</li>
+                                    <li>Troubleshooting & problem-solving methods used in IT support</li>
+                                </ul>
+                            </div>
+
+                            <div class="detail-block">
+                                <h4>What you will get</h4>
+                                <ul>
+                                    <li>An official completion certificate verified by Google</li>
+                                    <li>Foundational IT knowledge prepared for entry-level tech roles</li>
+                                    <li>A strong structural base for studying cybersecurity, networking, and computer science</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-meta">
+                        <span>Includes Certificate</span>
+                        <span style="color: var(--primary); font-weight: 700;">Verified by Google</span>
+                    </div>
+                </div>
+
+                <!-- Course 2: IBM AI -->
+                <div class="card">
+                    <div>
+                        <div class="card-partner">IBM SkillsBuild</div>
+                        <h3>Introduction to Artificial Intelligence</h3>
+                        
+                        <div class="course-details">
+                            <div class="detail-block">
+                                <h4>Prerequisites (What you need)</h4>
+                                <ul>
+                                    <li>No AI or programming experience required</li>
+                                    <li>Basic computer literacy</li>
+                                    <li>Ability to understand English</li>
+                                    <li>Curiosity about AI and emerging technology trends</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="detail-block">
+                                <h4>What you will learn</h4>
+                                <ul>
+                                    <li>What Artificial Intelligence is & real-world industry applications</li>
+                                    <li>Machine Learning and neural network basics</li>
+                                    <li>AI algorithms structures</li>
+                                    <li>Modern prompt engineering concepts</li>
+                                </ul>
+                            </div>
+
+                            <div class="detail-block">
+                                <h4>What you will get</h4>
+                                <ul>
+                                    <li>An official completion certificate verified by IBM</li>
+                                    <li>Fundamental, structured understanding of current AI technologies</li>
+                                    <li>The ideal launching pad for moving into advanced machine learning steps</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-meta">
+                        <span>Includes Certificate</span>
+                        <span style="color: var(--primary); font-weight: 700;">Verified by IBM</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Payment Instruction Guide -->
+        <section id="payment">
+            <h2>Registration & Payment Process</h2>
+            <div class="payment-box">
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Choose Payment Method</h4>
+                        <p>Transfer the program fee to either of our official payment accounts listed below:</p>
+                        
+                        <div class="accounts-display">
+                            <div class="account-row">
+                                <span class="account-label">Telebirr Wallet</span>
+                                <span class="account-number">0946140788</span>
+                                <span class="account-name">Account Holder: Biruk Aschalew Legesse</span>
+                            </div>
+                            <div class="account-row">
+                                <span class="account-label">Commercial Bank of Ethiopia (CBE)</span>
+                                <span class="account-number">1000425999587</span>
+                                <span class="account-name">Account Holder: Biruk Aschalew Legesse</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Save Your Receipt</h4>
+                        <p>Take a clear, uncropped screenshot of your successful transaction screen confirmation or save your validation transaction code key.</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Submit Verification Form</h4>
+                        <p>Fill out your personal details in the portal below, input your reference key, and upload your file proof to secure your seat.</p>
+                    </div>
+                </div>
+
+                <!-- Proof Verification Form Interface -->
+                <div class="form-section">
+                    <h3 style="margin-bottom: 1.5rem; text-align: center;">Submit Your Proof of Payment</h3>
+                    
+                    <form id="registrationForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+                        
+                        <!-- Web3Forms Access Token -->
+                        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                        <input type="hidden" name="subject" value="New Student Registration Request - Rise TECH">
+
+                        <div class="form-group">
+                            <label for="fullName">Student Full Name</label>
+                            <input type="text" id="fullName" name="student_name" required placeholder="Enter student's full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number (For Confirmation SMS)</label>
+                            <input type="tel" id="phoneNumber" name="student_phone" required placeholder="Example: 0912345678" pattern="[0-9]{9,10}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="courseSelect">Select Program Track</label>
+                            <select id="courseSelect" name="selected_course" required>
+                                <option value="" disabled selected>Choose your course...</option>
+                                <option value="Google IT Support Track">Google IT Support & Technical Foundations</option>
+                                <option value="IBM AI Track">IBM Introduction to AI Foundations</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Provider Used</label>
+                            <select id="paymentMethod" name="payment_provider" required>
+                                <option value="" disabled selected>Choose provider...</option>
+                                <option value="Telebirr Wallet">Telebirr Wallet Transaction</option>
+                                <option value="CBE Bank Transfer">Commercial Bank of Ethiopia (CBE)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="refNumber">Transaction Reference Number / Key</label>
+                            <input type="text" id="refNumber" name="transaction_reference" required placeholder="Example: FT240... or Txn ID">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="screenshot">Upload Receipt Screenshot</label>
+                            <input type="file" id="screenshot" name="receipt_screenshot" accept="image/*" required>
+                        </div>
+
+                        <button type="submit" id="submitBtn">Verify Registration</button>
+                    </form>
+
+                    <div class="success-message" id="successBox">
+                        ✓ Payment Submitted! Your registration record and screenshot have been emailed to our verification team. We will send a confirmation SMS to your phone number shortly.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Rise TECH Academy in partnership with Don Bosco Catholic School Batu. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const successBox = document.getElementById('successBox');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', async function(e) {
+            const accessKeyInput = form.querySelector('input[name="access_key"]').value;
+            if (accessKeyInput === "YOUR_ACCESS_KEY_HERE") {
+                e.preventDefault();
+                alert("Setup Warning: Please generate and insert your Web3Forms Access Key into the HTML code to receive form submissions!");
+                return;
+            }
+
+            e.preventDefault();
+            submitBtn.textContent = "Sending Verification Details...";
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    successBox.style.display = 'block';
+                    form.reset();
+                    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    alert("Submission error: " + (result.message || "Please check your entry sizes and try again."));
+                }
+            } catch (error) {
+                alert("Network communication error. Please verify your connection status.");
+            } finally {
+                submitBtn.textContent = "Verify Registration";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
