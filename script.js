@@ -3,8 +3,12 @@
    ============================================================ */
 const CAPACITY_LIMIT = 74;
 
-// Simulating persistent counter storage values locally across compilation sessions
-let currentSubmissionsCount = parseInt(localStorage.getItem('rise_tech_submission_tally')) || 68;
+// Tracks dynamic counter decrementing state sequentially
+let currentSubmissionsCount = parseInt(localStorage.getItem('rise_tech_submission_tally'));
+if (isNaN(currentSubmissionsCount)) {
+    currentSubmissionsCount = 68; // Starting fallback value if no interactions exist yet
+    localStorage.setItem('rise_tech_submission_tally', currentSubmissionsCount);
+}
 
 const cohortCounterLabel = document.getElementById('cohortCounterLabel');
 const registrationForm = document.getElementById('registrationForm');
@@ -13,7 +17,6 @@ const formHeaderTitle = document.getElementById('formHeaderTitle');
 const formHeaderSub = document.getElementById('formHeaderSub');
 const submitBtn = document.getElementById('submitBtn');
 
-// Track the original text of your submit button
 const originalBtnText = submitBtn ? submitBtn.textContent : "Transmit Verification Payload";
 
 function synchronizeCapacityInterface() {
@@ -30,35 +33,59 @@ function synchronizeCapacityInterface() {
     }
 }
 
-// Initialize state check on page load
+// Run visual initialization pass immediately
 synchronizeCapacityInterface();
 
 /* ============================================================
-   WEB3FORMS CLIENT-SIDE FORM LISTENER (WITH AJAX BACKEND)
+   CLIENT-SIDE FILE TO TEXT STRING CONVERSION WORKAROUND
+   ============================================================ */
+const receiptImageInput = document.getElementById('receiptImage');
+const receiptTextDataHiddenInput = document.getElementById('receiptTextData');
+
+if (receiptImageInput) {
+    receiptImageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            // Check file sizing constraint bounds (Keep under 2MB to prevent API timeout rejects)
+            if (file.size > 2 * 1024 * 1024) {
+                alert("The selected image file size is too large. Please select an image under 2MB.");
+                this.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                // reader.result contains the entire image translated into an ASCII text sequence string
+                if (receiptTextDataHiddenInput) {
+                    receiptTextDataHiddenInput.value = reader.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+/* ============================================================
+   WEB3FORMS CLIENT-SIDE FORM LISTENER (WITH TEXT CONVERSION LOGIC)
    ============================================================ */
 if (registrationForm) {
     registrationForm.addEventListener('submit', async function(e) {
-        // 1. Intercept standard page refresh behavior
         e.preventDefault();
         
-        // Block action immediately if capacity limit was reached asynchronously
         if (currentSubmissionsCount >= CAPACITY_LIMIT) {
             synchronizeCapacityInterface();
             return;
         }
         
-        // UI Visual transition parameters (loading state)
         registrationForm.style.opacity = '0.5';
         if(submitBtn) {
-            submitBtn.textContent = "Processing Transmission...";
+            submitBtn.textContent = "Converting Materials & Submitting...";
             submitBtn.disabled = true;
         }
 
-        // 2. Build form payload context parameters
         const formData = new FormData(registrationForm);
 
         try {
-            // 3. Request API transmission pipeline to Web3Forms
             const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 body: formData
@@ -67,46 +94,41 @@ if (registrationForm) {
             const jsonResult = await response.json();
 
             if (response.status === 200) {
-                // 4. Success state: Update and save submission tracking counter
+                // Success: Safely increment data submission tracking counters
                 currentSubmissionsCount++;
                 localStorage.setItem('rise_tech_submission_tally', currentSubmissionsCount);
                 
-                // 5. Hide the input fields container layout, swap with success interface
                 registrationForm.style.display = 'none';
                 if (formHeaderTitle) formHeaderTitle.style.display = 'none';
                 if (formHeaderSub) formHeaderSub.style.display = 'none';
                 
-                // Safely search for and reveal your hidden success message box
                 const successCard = document.getElementById('successCard');
                 if (successCard) {
                     successCard.style.display = 'block';
                     successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
-                    // Fallback alert if success element div container is completely missing in HTML
                     alert("Submission successful. Our Team members will contact you through Text and Email AS soon as your registration review is done.");
                 }
             } else {
-                throw new Error(jsonResult.message || 'Web3Forms pipeline processing layout exception flag state detected.');
+                throw new Error(jsonResult.message || 'Web3Forms transaction endpoint rejection occurred.');
             }
 
         } catch (error) {
-            console.error('Registration subsystem pipeline transmission layout crash context:', error);
-            alert(`Something went wrong: ${error.message || 'Transmission pipeline connection failure.'}\nPlease check your connectivity and try again.`);
+            console.error('Submission pipeline tracking error:', error);
+            alert(`Something went wrong: ${error.message || 'Network connectivity fault.'}\nPlease try again.`);
         } finally {
-            // Reset loading attributes fallback conditions
             registrationForm.style.opacity = '1';
             if(submitBtn) {
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;
             }
-            // Update capacity UI count in real time
             synchronizeCapacityInterface();
         }
     });
 }
 
 /* ============================================================
-   THEME ENGINE
+   THEME SWITCHING SUB-ROUTINE SYSTEM
    ============================================================ */
 const themeToggle = document.getElementById('themeToggle');
 if(themeToggle) {
