@@ -3,10 +3,10 @@
    ============================================================ */
 const CAPACITY_LIMIT = 74;
 
-// Tracks dynamic counter decrementing state sequentially
+// Tracks total accepted registration count sequentially
 let currentSubmissionsCount = parseInt(localStorage.getItem('rise_tech_submission_tally'));
 if (isNaN(currentSubmissionsCount)) {
-    currentSubmissionsCount = 68; // Starting fallback value if no interactions exist yet
+    currentSubmissionsCount = 0; // Starts clean at 0 registrations accepted
     localStorage.setItem('rise_tech_submission_tally', currentSubmissionsCount);
 }
 
@@ -20,6 +20,7 @@ const submitBtn = document.getElementById('submitBtn');
 const originalBtnText = submitBtn ? submitBtn.textContent : "Transmit Verification Payload";
 
 function synchronizeCapacityInterface() {
+    // Calculates empty seats subtracting upwards from absolute zero starting index
     const spacesLeft = CAPACITY_LIMIT - currentSubmissionsCount;
     
     if (spacesLeft <= 0) {
